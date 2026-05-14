@@ -23,7 +23,6 @@
     <color name="nav_bg">#FFF8F4</color>
     <color name="statusBar">#F4F0ED</color>
 
-    <!-- Старые имена, чтобы не ломались XML-файлы -->
     <color name="dark">#1B1715</color>
     <color name="muted">#6F625B</color>
 </resources>
