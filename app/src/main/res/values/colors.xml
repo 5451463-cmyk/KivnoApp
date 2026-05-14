@@ -1,20 +1,37 @@
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="terra">#C4573A</color>
-    <color name="terra_dark">#9E3A20</color>
-    <color name="terra_soft">#F5EDE8</color>
-    <color name="poop_brown">#7B4F1E</color>
-    <color name="poop_light">#B07A48</color>
-    <color name="bg">#F5F1EE</color>
+
+    <!-- Основные -->
+    <color name="terra">#C8643B</color>
+    <color name="terra_dark">#A3472B</color>
+    <color name="terra_soft">#F6E7DF</color>
+
+    <!-- KIVNO -->
+    <color name="poop_brown">#6A3D1E</color>
+    <color name="poop_light">#A86B3B</color>
+
+    <!-- Фоны -->
+    <color name="bg">#F4F0ED</color>
     <color name="card">#FFFFFF</color>
-    <color name="dark">#1A1614</color>
-    <color name="text">#2C2420</color>
-    <color name="muted">#8A7E78</color>
-    <color name="border">#E8E2DC</color>
-    <color name="surface">#EDE8E4</color>
+    <color name="surface">#EFE7E1</color>
+    <color name="border">#E4D8CF</color>
+
+    <!-- Текст -->
+    <color name="text_main">#1B1715</color>
+    <color name="text_secondary">#6F625B</color>
+    <color name="text_light">#FFFFFF</color>
+
+    <!-- UI -->
     <color name="success">#16A34A</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-    <color name="nav_bg">#FFFFFFEE</color>
-    <color name="statusBar">#F5F1EE</color>
+
+    <!-- Navigation -->
+    <color name="nav_bg">#FFF8F4</color>
+
+    <!-- System -->
+    <color name="statusBar">#F4F0ED</color>
+
 </resources>
+```
