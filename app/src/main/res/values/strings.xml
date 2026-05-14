@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">КИВНО.РУ</string>
+    <string name="tab_main">Главная</string>
+    <string name="tab_films">Архив</string>
+    <string name="tab_people">Кивноделы</string>
+    <string name="vote_btn">💩 Закидать КИВНО</string>
+    <string name="voted_ok">💩 Засчитано!</string>
+    <string name="voted_limit">Лимит 24ч</string>
+    <string name="loading">Загрузка…</string>
+    <string name="error_network">Нет соединения с сервером</string>
+    <string name="retry">Повторить</string>
+    <string name="full_kivno">💩💩 Полное Кивно</string>
+    <string name="kivno">💩 Кивно</string>
+    <string name="in_cinema_today">🎬 В кино</string>
+    <string name="archive">Архив</string>
+    <string name="open_kinopoisk">Открыть Кинопоиск →</string>
+    <string name="watch_trailer">▶ Трейлер</string>
+    <string name="ratings">Рейтинг</string>
+    <string name="disappointment">Степень разочарования:</string>
+</resources>

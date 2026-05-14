@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="terra">#C4573A</color>
+    <color name="terra_dark">#9E3A20</color>
+    <color name="terra_soft">#F5EDE8</color>
+    <color name="poop_brown">#7B4F1E</color>
+    <color name="poop_light">#B07A48</color>
+    <color name="bg">#F5F1EE</color>
+    <color name="card">#FFFFFF</color>
+    <color name="dark">#1A1614</color>
+    <color name="text">#2C2420</color>
+    <color name="muted">#8A7E78</color>
+    <color name="border">#E8E2DC</color>
+    <color name="surface">#EDE8E4</color>
+    <color name="success">#16A34A</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="nav_bg">#FFFFFFEE</color>
+    <color name="statusBar">#F5F1EE</color>
+</resources>
