@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val adapter = MainAdapter(
-        onFilmClick = { film -> openFilm(film) },
+        onFilmClick = { film -> startActivity(Intent(this, FilmActivity::class.java).putExtra("film_id", film.id)) },
         onVoteClick = { film, btn -> voteFilm(film, btn) }
     )
 
@@ -28,7 +28,6 @@ class MainActivity : AppCompatActivity() {
 
         binding.recyclerMain.layoutManager = LinearLayoutManager(this)
         binding.recyclerMain.adapter = adapter
-
         binding.swipeRefresh.setColorSchemeResources(R.color.terra)
         binding.swipeRefresh.setOnRefreshListener { loadData() }
 
@@ -37,13 +36,11 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_main    -> { loadData(); true }
                 R.id.nav_archive -> { loadArchive(); true }
                 R.id.nav_people  -> {
-                    startActivity(Intent(this, PeopleActivity::class.java))
-                    true
+                    startActivity(Intent(this, PeopleActivity::class.java)); true
                 }
                 else -> false
             }
         }
-
         loadData()
     }
 
@@ -53,10 +50,9 @@ class MainActivity : AppCompatActivity() {
             try {
                 val top   = ApiService.getTopFilms()
                 val daily = ApiService.getDailyFilms()
-                adapter.setData(top.films, daily.films, top.total)
+                adapter.setData(top.films, daily.films)
             } catch (e: Exception) {
-                Snackbar.make(binding.root,
-                    getString(R.string.error_network), Snackbar.LENGTH_SHORT).show()
+                showErr()
             } finally {
                 binding.swipeRefresh.isRefreshing = false
             }
@@ -67,43 +63,34 @@ class MainActivity : AppCompatActivity() {
         binding.swipeRefresh.isRefreshing = true
         lifecycleScope.launch {
             try {
-                val archive = ApiService.getArchive()
-                adapter.setArchive(archive.films)
+                adapter.setArchive(ApiService.getArchive().films)
             } catch (e: Exception) {
-                Snackbar.make(binding.root,
-                    getString(R.string.error_network), Snackbar.LENGTH_SHORT).show()
+                showErr()
             } finally {
                 binding.swipeRefresh.isRefreshing = false
             }
         }
     }
 
-    private fun openFilm(film: Film) {
-        startActivity(Intent(this, FilmActivity::class.java).putExtra("film_id", film.id))
-    }
-
     private fun voteFilm(film: Film, btn: Button) {
-        btn.isEnabled = false
-        btn.text = "💩 Летит…"
-        val deviceId = android.provider.Settings.Secure.getString(
-            contentResolver, android.provider.Settings.Secure.ANDROID_ID
-        ) ?: "unknown"
+        btn.isEnabled = false; btn.text = "💩 Летит…"
+        val dev = android.provider.Settings.Secure.getString(
+            contentResolver, android.provider.Settings.Secure.ANDROID_ID) ?: "unknown"
         lifecycleScope.launch {
             try {
-                val result = ApiService.vote("film", film.id, 5, deviceId)
-                if (result.ok) {
-                    btn.text = getString(R.string.voted_ok)
-                    adapter.updatePoop(film.id, result.count, result.percent)
+                val res = ApiService.vote("film", film.id, 5, dev)
+                if (res.ok) {
+                    btn.text = "✓ +${res.added}!"
+                    adapter.updatePoop(film.id, res.poopCount, film.percent)
                 } else {
-                    btn.text = result.message ?: "💩 Кивно"
-                    btn.isEnabled = true
+                    btn.text = res.message ?: "💩 Лимит"; btn.isEnabled = true
                 }
             } catch (e: Exception) {
-                btn.text = "💩 Закидать КИВНО"
-                btn.isEnabled = true
-                Snackbar.make(binding.root,
-                    getString(R.string.error_network), Snackbar.LENGTH_SHORT).show()
+                btn.text = "💩 Закидать КИВНО"; btn.isEnabled = true; showErr()
             }
         }
     }
+
+    private fun showErr() = Snackbar.make(binding.root,
+        getString(R.string.error_network), Snackbar.LENGTH_SHORT).show()
 }
