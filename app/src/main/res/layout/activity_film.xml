@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:contentScrim="#CC1B1715"
+            app:contentScrim="@color/text_main"
             app:expandedTitleMarginStart="16dp"
             app:expandedTitleMarginBottom="16dp">
 
@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:background="#221815"
+                android:background="@color/text_main"
                 android:contentDescription="@string/app_name"
                 app:layout_collapseMode="parallax"/>
 
@@ -178,10 +178,10 @@
                     android:orientation="vertical" android:padding="16dp">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="Описание" android:textSize="16sp" android:textStyle="bold"
-                        android:textColor="@color/@color/text_main" android:layout_marginBottom="8dp"/>
+                        android:textColor="@color/text_main" android:layout_marginBottom="8dp"/>
                     <TextView android:id="@+id/txtSynopsis"
                         android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:textSize="14sp" android:textColor="@color/text"
+                        android:textSize="14sp" android:textColor="@color/text_main"
                         android:lineSpacingMultiplier="1.5"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
