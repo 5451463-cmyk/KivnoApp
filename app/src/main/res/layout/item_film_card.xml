@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:textStyle="bold"
-                android:textColor="@color/dark"
+                android:textColor="@color/text_main"
                 android:maxLines="2"
                 android:ellipsize="end"
                 android:layout_marginBottom="3dp"/>
@@ -94,7 +94,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
-                    android:textColor="@color/muted"/>
+                    android:textColor="@color/text_secondary"
             </LinearLayout>
 
             <!-- Кнопка голосования -->
