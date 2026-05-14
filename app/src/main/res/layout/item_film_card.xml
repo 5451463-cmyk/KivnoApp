@@ -8,22 +8,24 @@
     android:layout_marginBottom="16dp"
     app:cardCornerRadius="20dp"
     app:cardElevation="4dp"
-    app:cardBackgroundColor="@color/card">
+    app:cardBackgroundColor="@color/card"
+    app:strokeColor="@color/border"
+    app:strokeWidth="1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@color/card">
 
-        <!-- Постер -->
         <ImageView
             android:id="@+id/imgPoster"
-            android:layout_width="100dp"
-            android:layout_height="150dp"
+            android:layout_width="104dp"
+            android:layout_height="156dp"
             android:scaleType="centerCrop"
-            android:background="@color/surface"/>
+            android:background="@color/surface"
+            android:contentDescription="@string/app_name"/>
 
-        <!-- Инфо -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -35,7 +37,7 @@
                 android:id="@+id/txtBadge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#12C4573A"
+                android:background="@color/terra_soft"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="3dp"
                 android:textSize="10sp"
@@ -63,7 +65,6 @@
                 android:textColor="@color/text_secondary"
                 android:layout_marginBottom="10dp"/>
 
-            <!-- Шкала какашек -->
             <ProgressBar
                 android:id="@+id/progressPoop"
                 style="?android:attr/progressBarStyleHorizontal"
@@ -94,10 +95,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
-                    android:textColor="@color/text_secondary"
+                    android:textColor="@color/text_secondary"/>
             </LinearLayout>
 
-            <!-- Кнопка голосования -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnVote"
                 style="@style/Widget.Kivno.Button.Vote"
