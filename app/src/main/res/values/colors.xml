@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="terra">#C8643B</color>
-    <color name="terra_dark">#A3472B</color>
-    <color name="terra_soft">#F6E7DF</color>
 
-    <color name="poop_brown">#6A3D1E</color>
-    <color name="poop_light">#A86B3B</color>
+    <!-- Основные -->
+    <color name="primary">#A0522D</color>
+    <color name="primary_dark">#7A3E22</color>
+    <color name="accent">#D97B48</color>
 
-    <color name="bg">#F4F0ED</color>
-    <color name="card">#FFFFFF</color>
-    <color name="surface">#EFE7E1</color>
-    <color name="border">#E4D8CF</color>
+    <!-- Фон -->
+    <color name="background">#F5F1EE</color>
+    <color name="surface">#FFFFFF</color>
 
+    <!-- Текст -->
     <color name="text_main">#1B1715</color>
     <color name="text_secondary">#6F625B</color>
-    <color name="text_light">#FFFFFF</color>
+    <color name="text">#1B1715</color>
 
-    <color name="success">#16A34A</color>
+    <!-- Дополнительные -->
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-
-    <color name="nav_bg">#FFF8F4</color>
-    <color name="statusBar">#F4F0ED</color>
-
     <color name="dark">#1B1715</color>
     <color name="muted">#6F625B</color>
+
+    <!-- Рейтинг -->
+    <color name="kivno">#7A3E22</color>
+    <color name="not_kivno">#C0392B</color>
+
 </resources>
