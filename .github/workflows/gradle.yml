@@ -24,10 +24,12 @@ jobs:
       - name: Accept licenses
         run: yes | sdkmanager --licenses || true
 
+      - name: Set SDK path
+        run: echo "sdk.dir=$ANDROID_SDK_ROOT" > local.properties
+
       - name: Build APK
         run: gradle assembleDebug --no-daemon
         env:
-          ANDROID_HOME: ${{ env.ANDROID_SDK_ROOT }}
           GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx2g"
 
       - name: Upload APK
