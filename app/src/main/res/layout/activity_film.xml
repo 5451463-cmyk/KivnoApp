@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:contentScrim="@color/dark"
+            app:contentScrim="#CC1B1715"
             app:expandedTitleMarginStart="16dp"
             app:expandedTitleMarginBottom="16dp">
 
@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:background="@color/dark"
+                android:background="#221815"
                 android:contentDescription="@string/app_name"
                 app:layout_collapseMode="parallax"/>
 
@@ -66,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="13sp"
-                android:textColor="@color/muted"
+                android:textColor="@color/text_secondary"
                 android:layout_marginBottom="16dp"/>
 
             <!-- 4 статистики напрямую (без include) -->
@@ -87,7 +87,7 @@
                             android:textSize="18sp" android:textStyle="bold" android:textColor="@color/terra"
                             android:fontFamily="sans-serif-black"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="за день" android:textSize="10sp" android:textColor="@color/muted"/>
+                            android:text="за день" android:textSize="10sp" android:textColor="@color/text_secondary"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -102,7 +102,7 @@
                             android:textSize="18sp" android:textStyle="bold" android:textColor="@color/terra"
                             android:fontFamily="sans-serif-black"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="за неделю" android:textSize="10sp" android:textColor="@color/muted"/>
+                            android:text="за неделю" android:textSize="10sp" android:textColor="@color/text_secondary"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -117,7 +117,7 @@
                             android:textSize="18sp" android:textStyle="bold" android:textColor="@color/terra"
                             android:fontFamily="sans-serif-black"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="за месяц" android:textSize="10sp" android:textColor="@color/muted"/>
+                            android:text="за месяц" android:textSize="10sp" android:textColor="@color/text_secondary"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -132,7 +132,7 @@
                             android:textSize="18sp" android:textStyle="bold" android:textColor="@color/terra"
                             android:fontFamily="sans-serif-black"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="всего" android:textSize="10sp" android:textColor="@color/muted"/>
+                            android:text="всего" android:textSize="10sp" android:textColor="@color/text_secondary"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -178,7 +178,7 @@
                     android:orientation="vertical" android:padding="16dp">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="Описание" android:textSize="16sp" android:textStyle="bold"
-                        android:textColor="@color/dark" android:layout_marginBottom="8dp"/>
+                        android:textColor="@color/@color/text_main" android:layout_marginBottom="8dp"/>
                     <TextView android:id="@+id/txtSynopsis"
                         android:layout_width="match_parent" android:layout_height="wrap_content"
                         android:textSize="14sp" android:textColor="@color/text"
@@ -196,7 +196,7 @@
                     android:orientation="vertical" android:padding="16dp">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="Кадры из фильма" android:textSize="16sp" android:textStyle="bold"
-                        android:textColor="@color/dark" android:layout_marginBottom="8dp"/>
+                        android:textColor="@color/text_main" android:layout_marginBottom="8dp"/>
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerStills"
                         android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -215,7 +215,7 @@
                     android:orientation="vertical" android:padding="16dp">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="Создатели" android:textSize="16sp" android:textStyle="bold"
-                        android:textColor="@color/dark" android:layout_marginBottom="8dp"/>
+                        android:textColor="@color/text_main" android:layout_marginBottom="8dp"/>
                     <LinearLayout android:id="@+id/crewContainer"
                         android:layout_width="match_parent" android:layout_height="wrap_content"
                         android:orientation="vertical"/>
