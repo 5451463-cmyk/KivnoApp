@@ -1,37 +1,29 @@
-```xml
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <!-- Основные -->
     <color name="terra">#C8643B</color>
     <color name="terra_dark">#A3472B</color>
     <color name="terra_soft">#F6E7DF</color>
 
-    <!-- KIVNO -->
     <color name="poop_brown">#6A3D1E</color>
     <color name="poop_light">#A86B3B</color>
 
-    <!-- Фоны -->
     <color name="bg">#F4F0ED</color>
     <color name="card">#FFFFFF</color>
     <color name="surface">#EFE7E1</color>
     <color name="border">#E4D8CF</color>
 
-    <!-- Текст -->
     <color name="text_main">#1B1715</color>
     <color name="text_secondary">#6F625B</color>
     <color name="text_light">#FFFFFF</color>
 
-    <!-- UI -->
     <color name="success">#16A34A</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
 
-    <!-- Navigation -->
     <color name="nav_bg">#FFF8F4</color>
-
-    <!-- System -->
     <color name="statusBar">#F4F0ED</color>
 
+    <!-- Старые имена, чтобы не ломались XML-файлы -->
+    <color name="dark">#1B1715</color>
+    <color name="muted">#6F625B</color>
 </resources>
-```
