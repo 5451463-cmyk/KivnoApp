@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Kivno" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/terra</item>
+        <item name="colorPrimaryVariant">@color/terra_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/poop_brown</item>
+        <item name="colorSurface">@color/card</item>
+        <item name="colorOnSurface">@color/text_main</item>
+        <item name="android:colorBackground">@color/bg</item>
+        <item name="android:windowBackground">@color/bg</item>
+        <item name="android:statusBarColor">@color/statusBar</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:navigationBarColor">@color/white</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="materialCardViewStyle">@style/Widget.Kivno.Card</item>
+    </style>
+
+    <style name="Widget.Kivno.Card" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/card</item>
+        <item name="strokeColor">@color/border</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="cardElevation">4dp</item>
+    </style>
+
+    <style name="TextAppearance.Kivno.Title" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:textColor">@color/text_main</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Widget.Kivno.Button.Vote" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/terra</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="cornerRadius">28dp</item>
+        <item name="android:paddingTop">14dp</item>
+        <item name="android:paddingBottom">14dp</item>
+        <item name="elevation">6dp</item>
+    </style>
+</resources>
