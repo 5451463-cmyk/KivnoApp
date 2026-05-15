@@ -2,19 +2,21 @@ package ru.kivno.app.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.text.Editable
 import android.text.TextWatcher
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import ru.kivno.app.R
 import ru.kivno.app.api.ApiService
 import ru.kivno.app.databinding.ActivityMainBinding
 import ru.kivno.app.model.Film
+import ru.kivno.app.model.Person
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,9 +24,9 @@ class MainActivity : AppCompatActivity() {
     private var searchJob: Job? = null
 
     private val adapter = MainAdapter(
-        onFilmClick = { film -> openFilm(film) },
-        onVoteClick = { film, btn -> voteFilm(film, btn) },
-        onPersonClick = { openPeople() }
+        onFilmClick   = { film   -> openFilm(film) },
+        onVoteClick   = { film, btn -> voteFilm(film, btn) },
+        onPersonClick = { person -> openPerson(person) }   // ← клик на кивнодела
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,51 +37,39 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerMain.layoutManager = LinearLayoutManager(this)
         binding.recyclerMain.adapter = adapter
 
-        binding.swipeRefresh.setColorSchemeResources(ru.kivno.app.R.color.terra)
-        binding.swipeRefresh.setOnRefreshListener { loadData() }
+        binding.swipeRefresh.setColorSchemeResources(R.color.terra)
+        binding.swipeRefresh.setOnRefreshListener {
+            when (binding.bottomNav.selectedItemId) {
+                R.id.nav_archive -> loadArchive()
+                R.id.nav_people  -> loadPeople()
+                else             -> loadData()
+            }
+        }
 
+        // Поиск
         binding.edtSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                handleSearchText(s?.toString().orEmpty())
+                handleSearch(s?.toString().orEmpty())
             }
             override fun afterTextChanged(s: Editable?) {}
         })
 
+        // Нижняя навигация — всё показывается В ГЛАВНОМ ЭКРАНЕ
         binding.bottomNav.setOnItemSelectedListener { item ->
+            binding.edtSearch.text?.clear()
             when (item.itemId) {
-                ru.kivno.app.R.id.nav_main    -> { loadData(); true }
-                ru.kivno.app.R.id.nav_archive -> { loadArchive(); true }
-                ru.kivno.app.R.id.nav_people  -> {
-                    startActivity(Intent(this, PeopleActivity::class.java))
-                    true
-                }
-                else -> false
+                R.id.nav_main    -> { loadData();    true }
+                R.id.nav_archive -> { loadArchive(); true }
+                R.id.nav_people  -> { loadPeople();  true }  // ← больше не startActivity!
+                else             -> false
             }
         }
 
         loadData()
     }
 
-    private fun handleSearchText(text: String) {
-        searchJob?.cancel()
-        val query = text.trim()
-
-        if (query.length < 2) {
-            loadData()
-            return
-        }
-
-        searchJob = lifecycleScope.launch {
-            delay(350)
-            try {
-                val result = ApiService.search(query)
-                adapter.setSearchResults(query, result.films, result.people)
-            } catch (e: Exception) {
-                showError()
-            }
-        }
-    }
+    // ── Загрузка данных ─────────────────────────────────────────
 
     private fun loadData() {
         binding.swipeRefresh.isRefreshing = true
@@ -88,11 +78,8 @@ class MainActivity : AppCompatActivity() {
                 val top   = ApiService.getTopFilms()
                 val daily = ApiService.getDailyFilms()
                 adapter.setData(top.films, daily.films, top.total)
-            } catch (e: Exception) {
-                showError()
-            } finally {
-                binding.swipeRefresh.isRefreshing = false
-            }
+            } catch (e: Exception) { showErr() }
+            finally { binding.swipeRefresh.isRefreshing = false }
         }
     }
 
@@ -100,53 +87,85 @@ class MainActivity : AppCompatActivity() {
         binding.swipeRefresh.isRefreshing = true
         lifecycleScope.launch {
             try {
-                val archive = ApiService.getArchive()
-                adapter.setArchive(archive.films)
-            } catch (e: Exception) {
-                showError()
-            } finally {
-                binding.swipeRefresh.isRefreshing = false
-            }
+                adapter.setArchive(ApiService.getArchive().films)
+            } catch (e: Exception) { showErr() }
+            finally { binding.swipeRefresh.isRefreshing = false }
         }
     }
 
-    private fun openPeople() {
-        startActivity(Intent(this, PeopleActivity::class.java))
+    // ← Кивноделы загружаются в тот же RecyclerView — меню остаётся
+    private fun loadPeople() {
+        binding.swipeRefresh.isRefreshing = true
+        lifecycleScope.launch {
+            try {
+                val resp = ApiService.getPeople()
+                adapter.setPeople(resp.people)
+            } catch (e: Exception) { showErr() }
+            finally { binding.swipeRefresh.isRefreshing = false }
+        }
     }
+
+    private fun handleSearch(text: String) {
+        searchJob?.cancel()
+        val q = text.trim()
+        if (q.length < 2) {
+            // При пустом поиске возвращаемся к текущей вкладке
+            when (binding.bottomNav.selectedItemId) {
+                R.id.nav_archive -> loadArchive()
+                R.id.nav_people  -> loadPeople()
+                else             -> loadData()
+            }
+            return
+        }
+        searchJob = lifecycleScope.launch {
+            delay(350)
+            try {
+                val result = ApiService.search(q)
+                adapter.setSearchResults(q, result.films, result.people)
+            } catch (e: Exception) { showErr() }
+        }
+    }
+
+    // ── Навигация ───────────────────────────────────────────────
 
     private fun openFilm(film: Film) {
-        startActivity(
-            Intent(this, FilmActivity::class.java).putExtra("film_id", film.id)
-        )
+        startActivity(Intent(this, FilmActivity::class.java).putExtra("film_id", film.id))
     }
 
-    private fun voteFilm(film: Film, btn: android.widget.Button) {
+    // Кивнодел → PersonActivity (отдельный экран с голосованием)
+    private fun openPerson(person: Person) {
+        startActivity(Intent(this, PersonActivity::class.java).apply {
+            putExtra("person_id",    person.id)
+            putExtra("person_name",  person.name)
+            putExtra("person_role",  person.profession ?: "")
+            putExtra("person_photo", person.photo ?: "")
+            putExtra("person_poop",  person.poopCount)
+        })
+    }
+
+    private fun voteFilm(film: Film, btn: Button) {
         btn.isEnabled = false
         btn.text = "💩 Летит…"
         val deviceId = android.provider.Settings.Secure.getString(
-            contentResolver, android.provider.Settings.Secure.ANDROID_ID
-        ) ?: "unknown"
+            contentResolver, android.provider.Settings.Secure.ANDROID_ID) ?: "unknown"
         lifecycleScope.launch {
             try {
-                val result = ApiService.vote("film", film.id, 5, deviceId)
-                if (result.ok) {
-                    btn.text = "✓ +${result.added} КИВНО!"
-                    adapter.updatePoop(film.id, result.poopCount)
+                val res = ApiService.vote("film", film.id, 5, deviceId)
+                if (res.ok) {
+                    btn.text = "✓ +${res.added} КИВНО!"
+                    adapter.updatePoop(film.id, res.poopCount)
                 } else {
-                    btn.text = result.message ?: "💩 Лимит"
+                    btn.text = res.message ?: "💩 Лимит"
                     btn.isEnabled = true
                 }
             } catch (e: Exception) {
-                btn.text = "💩 КИВНО"
+                btn.text = "💩 Закидать КИВНО"
                 btn.isEnabled = true
-                showError()
+                showErr()
             }
         }
     }
 
-    private fun showError() {
-        Snackbar.make(binding.root,
-            getString(ru.kivno.app.R.string.error_network),
-            Snackbar.LENGTH_SHORT).show()
-    }
+    private fun showErr() = Snackbar.make(binding.root,
+        getString(R.string.error_network), Snackbar.LENGTH_SHORT).show()
 }
