@@ -79,13 +79,14 @@ class MainAdapter(
         notifyDataSetChanged()
     }
 
-    fun updatePoop(filmId: Int, count: Int, pct: Int) {
-        items.indexOfFirst { it is Film && it.id == filmId }.takeIf { it >= 0 }?.let { pos ->
-            val film = items[pos] as Film
-            items[pos] = film.copy(poopCount = count, poopPct = pct)
-            notifyItemChanged(pos)
-        }
+fun updatePoop(filmId: Int, newCount: Int) {
+    val pos = items.indexOfFirst { it is Film && it.id == filmId }
+    if (pos >= 0) {
+        val old = items[pos] as Film
+        items[pos] = old.copy(poopCount = newCount)
+        notifyItemChanged(pos)
     }
+}
 
     override fun getItemViewType(position: Int) = when (items[position]) {
         is SectionHeader -> TYPE_HEADER
