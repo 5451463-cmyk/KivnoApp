@@ -10,6 +10,7 @@ import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.concurrent.TimeUnit
+import java.net.URLEncoder
 
 object ApiService {
 
@@ -57,6 +58,11 @@ object ApiService {
 
     suspend fun getPeople(role: String = ""): PeopleResponse =
         gson.fromJson(get("api_people.php?role=$role"), PeopleResponse::class.java)
+
+    suspend fun search(query: String): SearchResponse {
+        val encoded = URLEncoder.encode(query, "UTF-8")
+        return gson.fromJson(get("api_search.php?q=$encoded"), SearchResponse::class.java)
+    }
 
     suspend fun vote(type: String, id: Int, amount: Int, deviceId: String): VoteResponse =
         gson.fromJson(
