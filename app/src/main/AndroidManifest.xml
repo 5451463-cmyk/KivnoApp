@@ -28,6 +28,11 @@
             android:parentActivityName=".ui.MainActivity" />
 
         <activity
+            android:name=".ui.PersonActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.PeopleActivity" />
+
+        <activity
             android:name=".ui.PeopleActivity"
             android:exported="false"
             android:parentActivityName=".ui.MainActivity" />
