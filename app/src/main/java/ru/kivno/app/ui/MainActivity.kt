@@ -130,8 +130,8 @@ class MainActivity : AppCompatActivity() {
             try {
                 val result = ApiService.vote("film", film.id, 5, deviceId)
                 if (result.ok) {
-                    btn.text = getString(ru.kivno.app.R.string.voted_ok)
-                    adapter.updatePoop(film.id, result.count, result.percent)
+                    btn.text = "✓ +${result.added} КИВНО!"
+                    adapter.updatePoop(film.id, result.poopCount)
                 } else {
                     btn.text = result.message ?: "💩 Лимит"
                     btn.isEnabled = true

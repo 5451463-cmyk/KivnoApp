@@ -186,9 +186,9 @@ class MainAdapter(
             val metaParts = listOfNotNull(film.year, film.genre).filter { it.isNotBlank() }
             meta.text      = metaParts.joinToString(" · ")
             title.text     = film.title
-            progress.progress = film.poopPct
+            progress.progress = film.percent
             poopCount.text = "💩 ${film.poopCount}"
-            poopPct.text   = "${film.poopPct}%"
+            poopPct.text   = "${film.percent}%"
 
             if (!film.age.isNullOrBlank()) {
                 badge.text = film.age; badge.visibility = View.VISIBLE

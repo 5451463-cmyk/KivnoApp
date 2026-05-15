@@ -82,10 +82,10 @@ class FilmActivity : AppCompatActivity() {
         binding.txtGenre.text = meta.joinToString(" · ")
 
         // Статы — прямые ID из layout
-        binding.statDayValue.text   = f.poopDay.toString()
-        binding.statWeekValue.text  = f.poopWeek.toString()
-        binding.statMonthValue.text = f.poopMonth.toString()
-        binding.statAllValue.text   = f.poopCount.toString()
+        binding.statDayValue.text   = (f.stats?.day   ?: 0).toString()
+        binding.statWeekValue.text  = (f.stats?.week  ?: 0).toString()
+        binding.statMonthValue.text = (f.stats?.month ?: 0).toString()
+        binding.statAllValue.text   = (f.stats?.all   ?: f.poopCount).toString()
 
         // Синопсис
         val synopsis = listOfNotNull(f.synopsis, f.shortDesc).firstOrNull { it.isNotBlank() }
@@ -144,7 +144,7 @@ class FilmActivity : AppCompatActivity() {
                 val result = ApiService.vote("film", film.id, amount, deviceId)
                 if (result.ok) {
                     binding.btnVoteFilm.text = "✓ +$amount засчитано!"
-                    binding.statAllValue.text = result.count.toString()
+                    binding.statAllValue.text = result.poopCount.toString()
                 } else {
                     binding.btnVoteFilm.text = result.message ?: "💩 Лимит 24ч"
                 }

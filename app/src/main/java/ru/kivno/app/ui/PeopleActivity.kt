@@ -1,5 +1,6 @@
 package ru.kivno.app.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -37,19 +38,32 @@ class PeopleActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 val resp = ApiService.getPeople()
-                recycler.adapter = PeopleAdapter(resp.people)
-            } catch (e: Exception) { /* показываем пустой список */ }
+                recycler.adapter = PeopleAdapter(resp.people) { person ->
+                    openPerson(person)
+                }
+            } catch (e: Exception) { }
         }
     }
 
+    private fun openPerson(person: Person) {
+        startActivity(Intent(this, PersonActivity::class.java).apply {
+            putExtra("person_id",    person.id)
+            putExtra("person_name",  person.name)
+            putExtra("person_role",  person.profession ?: "")
+            putExtra("person_photo", person.photo ?: "")
+            putExtra("person_poop",  person.poopCount)
+        })
+    }
+
     override fun onSupportNavigateUp(): Boolean {
-        onBackPressedDispatcher.onBackPressed()
-        return true
+        onBackPressedDispatcher.onBackPressed(); return true
     }
 }
 
-class PeopleAdapter(private val people: List<Person>) :
-    RecyclerView.Adapter<PeopleAdapter.VH>() {
+class PeopleAdapter(
+    private val people: List<Person>,
+    private val onClick: (Person) -> Unit
+) : RecyclerView.Adapter<PeopleAdapter.VH>() {
 
     inner class VH(view: View) : RecyclerView.ViewHolder(view) {
         val img  = view.findViewById<ImageView>(R.id.imgPerson)
@@ -81,5 +95,8 @@ class PeopleAdapter(private val people: List<Person>) :
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.img)
         }
+
+        // ← КЛИК открывает PersonActivity
+        holder.itemView.setOnClickListener { onClick(p) }
     }
 }
