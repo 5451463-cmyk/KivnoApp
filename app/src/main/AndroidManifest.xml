@@ -30,7 +30,7 @@
         <activity
             android:name=".ui.PersonActivity"
             android:exported="false"
-            android:parentActivityName=".ui.PeopleActivity" />
+            android:parentActivityName=".ui.MainActivity" />
 
         <activity
             android:name=".ui.PeopleActivity"
