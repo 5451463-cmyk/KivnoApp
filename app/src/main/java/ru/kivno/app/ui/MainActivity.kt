@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     private val adapter = MainAdapter(
         onFilmClick   = { film   -> openFilm(film) },
-        onVoteClick   = { film, btn -> voteFilm(film, btn) },
+        onVoteClick   = { film, btn, amount -> voteFilm(film, btn, amount) },
         onPersonClick = { person -> openPerson(person) }   // ← клик на кивнодела
     )
 
@@ -143,14 +143,14 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun voteFilm(film: Film, btn: Button) {
+    private fun voteFilm(film: Film, btn: Button, amount: Int) {
         btn.isEnabled = false
         btn.text = "💩 Летит…"
         val deviceId = android.provider.Settings.Secure.getString(
             contentResolver, android.provider.Settings.Secure.ANDROID_ID) ?: "unknown"
         lifecycleScope.launch {
             try {
-                val res = ApiService.vote("film", film.id, 5, deviceId)
+                val res = ApiService.vote("film", film.id, amount, deviceId)
                 if (res.ok) {
                     btn.text = "✓ +${res.added} КИВНО!"
                     adapter.updatePoop(film.id, res.poopCount)

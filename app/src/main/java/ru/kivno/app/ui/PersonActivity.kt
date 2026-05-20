@@ -71,7 +71,7 @@ class PersonActivity : AppCompatActivity() {
                 if (person != null) {
                     currentPerson = person
                     buildUI(person, person.name, person.profession ?: "",
-                        person.photo ?: "", person.poopCount, "", "")
+                        person.photo ?: "", person.poopCount, person.biography ?: "", person.filmography ?: "")
                 }
             } catch (e: Exception) {
                 buildFromIntent()
@@ -189,6 +189,51 @@ class PersonActivity : AppCompatActivity() {
             val amount = seekBar.progress + 1
             castVote(person?.id ?: intent.getIntExtra("person_id", 0),
                 amount, voteBtn, poop0, header)
+        }
+
+
+        if (bio.isNotBlank()) {
+            val bioCard = makeCard()
+            val bioLayout = LinearLayout(this).apply {
+                orientation = LinearLayout.VERTICAL
+                setPadding(pad, pad, pad, pad)
+            }
+            bioLayout.addView(TextView(this).apply {
+                text = "Биография"
+                textSize = 16f
+                setTypeface(null, android.graphics.Typeface.BOLD)
+                setTextColor(getColor(R.color.dark))
+            })
+            bioLayout.addView(TextView(this).apply {
+                text = bio
+                textSize = 14f
+                setTextColor(getColor(R.color.text))
+                setPadding(0, dp(8), 0, 0)
+            })
+            bioCard.addView(bioLayout)
+            rootLayout.addView(bioCard)
+        }
+
+        if (filmography.isNotBlank()) {
+            val filmCard = makeCard()
+            val filmLayout = LinearLayout(this).apply {
+                orientation = LinearLayout.VERTICAL
+                setPadding(pad, pad, pad, pad)
+            }
+            filmLayout.addView(TextView(this).apply {
+                text = "Фильмография"
+                textSize = 16f
+                setTypeface(null, android.graphics.Typeface.BOLD)
+                setTextColor(getColor(R.color.dark))
+            })
+            filmLayout.addView(TextView(this).apply {
+                text = filmography
+                textSize = 14f
+                setTextColor(getColor(R.color.text))
+                setPadding(0, dp(8), 0, 0)
+            })
+            filmCard.addView(filmLayout)
+            rootLayout.addView(filmCard)
         }
 
         // ── Пространство снизу ───────────────────────────────────────
